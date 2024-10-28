@@ -3,24 +3,41 @@
 # throughout this file
 import pygame
 from constants import *
+from player import Player
 
 def main():
-    pygame.init()
-    clock = pygame.time.Clock()
-    dt = 0
-    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    
     print("Starting asteroids!")
     print(f"Screen width: {SCREEN_WIDTH}")
     print(f"Screen height: {SCREEN_HEIGHT}")
 
-    while True:
-        pygame.display.flip()
+    pygame.init()
+    clock = pygame.time.Clock()
+    dt = 0
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    player = Player(x = SCREEN_WIDTH / 2, y = SCREEN_HEIGHT / 2)
+    player.draw(screen)
 
+    while True:
+        # Handle events
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
+            
+        # Clear screen each frame
+        screen.fill((0, 0, 0))
+            
+        # update player
+        player.update(dt)
         
-        dt = clock.tick(60)
+        # Draw player
+        player.draw(screen)
+
+        #Flip the display
+        pygame.display.flip()
+
+        # Tick the clock
+        dt = clock.tick(60) / 1000
 
 
 
